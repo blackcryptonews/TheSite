@@ -3,7 +3,7 @@ import OpenAI from 'openai'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
-})
+})h
 
 const SYSTEM_PROMPT = `You are the BlackCryptoNews AI Oracle.
 
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
 
     // Call OpenAI API
     const response = await openai.chat.completions.create({
-      model: 'gpt-4-turbo-preview',
+      model: 'gpt-4o',
       max_tokens: 1500,
       temperature: 0.7,
       messages: messages,
