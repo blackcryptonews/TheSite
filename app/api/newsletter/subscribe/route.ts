@@ -1,7 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { rateLimit, getIP } from '@/lib/ratelimit'
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limiting: 3 signups per hour per IP
+    const ip = getIP(req)
+    const rateLimitResult = rateLimit(ip, 3, 3600)
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: 'Too many signup attempts. Please try again later.' },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': rateLimitResult.reset.toString(),
+          }
+        }
+      )
+    }
+
     const { email, firstName } = await req.json()
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {

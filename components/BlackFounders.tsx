@@ -1,6 +1,6 @@
 'use client'
 
-import { Users, Globe, Twitter, MapPin, TrendingUp, DollarSign } from 'lucide-react'
+import { Users, Globe, MapPin, TrendingUp, DollarSign, Link as LinkIcon } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 const featuredFounder = {
@@ -106,8 +106,8 @@ export default function BlackFounders() {
                   href={featuredFounder.twitter}
                   className="flex items-center gap-2 px-5 py-2.5 bg-cyan/10 border border-cyan/30 text-cyan hover:bg-cyan/20 transition-all rounded-xl text-sm font-semibold"
                 >
-                  <Twitter size={16} strokeWidth={2.5} />
-                  Follow
+                  <LinkIcon size={16} strokeWidth={2.5} />
+                  Connect
                 </motion.a>
               </div>
             </div>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ExternalLink, Twitter, Globe, ChevronRight, Rocket, Users, Zap, Shield, BookOpen, TrendingUp } from 'lucide-react'
+import { ExternalLink, Link as LinkIcon, Globe, ChevronRight, Rocket, Users, Zap, Shield, BookOpen, TrendingUp } from 'lucide-react'
 
 const CATEGORIES = ['All', 'DeFi', 'Infrastructure', 'NFT & Creator', 'Education', 'Payments', 'DAO']
 
@@ -203,7 +203,7 @@ export default function FoundersClient() {
                   {founder.twitter && (
                     <a href={"https://twitter.com/" + founder.twitter} target="_blank" rel="noopener noreferrer"
                       className="p-1.5 rounded-lg text-silver/30 hover:text-cyan transition-colors">
-                      <Twitter className="w-3.5 h-3.5" />
+                      <LinkIcon className="w-3.5 h-3.5" />
                     </a>
                   )}
                   {founder.website && founder.website !== '#' && (

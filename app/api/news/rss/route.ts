@@ -8,7 +8,7 @@ const RSS_FEEDS = [
   { url: 'https://thedefiant.io/feed', source: 'The Defiant' },
   { url: 'https://blockworks.co/feed/', source: 'Blockworks' },
   { url: 'https://bitcoinmagazine.com/.rss/full/', source: 'Bitcoin Magazine' },
-  { url: 'https://ambcrypto.com/feed/', source: 'AMBCrypto' },
+  { url: 'https://cryptoslate.com/feed/', source: 'CryptoSlate' },
 ]
 
 function extractText(xml: string, tag: string): string {

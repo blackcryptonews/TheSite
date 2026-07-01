@@ -40,6 +40,7 @@ const POPULAR_COINS = [
 ]
 
 const STORAGE_KEY = 'bcn_portfolio_v1'
+const MAX_HOLDINGS = 100 // Prevent localStorage overflow
 
 function loadHoldings(): Holding[] {
   try {
@@ -98,11 +99,18 @@ export default function PortfolioClient() {
   }, [holdings, fetchPrices])
 
   const addHolding = () => {
+    // Check max holdings limit
+    if (holdings.length >= MAX_HOLDINGS) {
+      toast.error(`Portfolio limit reached (${MAX_HOLDINGS} holdings max). Remove some holdings first.`)
+      return
+    }
+
     const coin = POPULAR_COINS.find(c => c.id === selectedCoin)
     if (!coin) return
     if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
       toast.error('Enter a valid amount'); return
     }
+
     const newHolding: Holding = {
       id: Date.now().toString(),
       coinId: coin.id,
@@ -119,6 +127,14 @@ export default function PortfolioClient() {
     setBuyPrice('')
     setShowAdd(false)
     toast.success(`Added ${coin.name} to portfolio`)
+
+    // Warning when approaching limit
+    if (updated.length >= MAX_HOLDINGS * 0.8) {
+      toast(`${updated.length}/${MAX_HOLDINGS} holdings. Consider removing old entries.`, {
+        icon: '⚠️',
+        duration: 5000,
+      })
+    }
   }
 
   const removeHolding = (id: string) => {

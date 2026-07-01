@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
+import { rateLimit, getIP } from '@/lib/ratelimit'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
@@ -35,6 +36,26 @@ Start each new conversation with energy. You are here to help close the wealth g
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limiting: 5 requests per minute per IP
+    const ip = getIP(req)
+    const rateLimitResult = rateLimit(ip, 5, 60)
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        {
+          error: `Rate limit exceeded. Please wait ${Math.ceil((rateLimitResult.reset - Date.now() / 1000) / 60)} minute(s) before asking another question.`
+        },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': rateLimitResult.reset.toString(),
+          }
+        }
+      )
+    }
+
     const { message, history } = await req.json()
 
     if (!message?.trim()) {
