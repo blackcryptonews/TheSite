@@ -3,30 +3,18 @@ import BreakingIntelligence from '@/components/BreakingIntelligence'
 import WealthGuides from '@/components/WealthGuides'
 import BlackFounders from '@/components/BlackFounders'
 import Tools from '@/components/Tools'
-import OracleButton from '@/components/OracleButton'
 import RecommendedPlatforms from '@/components/RecommendedPlatforms'
+import NewsletterSignup from '@/components/NewsletterSignup'
 
 export default function Home() {
   return (
-    <div>
+    <div className="overflow-hidden">
       <Hero />
-      
-      {/* Dashboard Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <BreakingIntelligence />
-          <BlackFounders />
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <WealthGuides />
-          <OracleButton />
-        </div>
-        
-        <Tools />
-      </div>
-
-      {/* Recommended Platforms */}
+      <BreakingIntelligence />
+      <WealthGuides />
+      <BlackFounders />
+      <Tools />
+      <NewsletterSignup />
       <RecommendedPlatforms />
     </div>
   )
